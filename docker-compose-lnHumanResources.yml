@@ -1,0 +1,56 @@
+services:
+  lnhumanresources:
+    image: lndockerhub.litinow.lab/lnhumanresources:latest
+    environment:
+      - _JAVA_OPTIONS=-Xmx512m -Xms256m
+      - SPRING_PROFILES_ACTIVE=dev,faker-by-sql
+      - MANAGEMENT_PROMETHEUS_METRICS_EXPORT_ENABLED=true
+      - SPRING_DATASOURCE_URL=jdbc:mysql://lnhumanresources-mysql:3306/lnhumanresources?useUnicode=true&characterEncoding=utf8&useSSL=false&useLegacyDatetimeCode=false&createDatabaseIfNotExist=true
+      - SPRING_LIQUIBASE_URL=jdbc:mysql://lnhumanresources-mysql:3306/lnhumanresources?useUnicode=true&characterEncoding=utf8&useSSL=false&useLegacyDatetimeCode=false&createDatabaseIfNotExist=true
+    ports:
+      - 8080:8080
+    healthcheck:
+      test:
+        - CMD
+        - curl
+        - -f
+        - http://localhost:8080/management/health
+      interval: 5s
+      timeout: 5s
+      retries: 40
+    depends_on:
+      lnhumanresources-mysql:
+        condition: service_healthy
+  lnhumanresources-mysql:
+    image: mysql:9.2.0
+    volumes:
+      - ./config/mysql:/etc/mysql/conf.d
+    environment:
+      - MYSQL_ALLOW_EMPTY_PASSWORD=yes
+      - MYSQL_DATABASE=lnhumanresources
+    command: mysqld --lower_case_table_names=1 --skip-mysqlx --character_set_server=utf8mb4 --explicit_defaults_for_timestamp
+    healthcheck:
+      test:
+        - CMD-SHELL
+        - mysql -e "SHOW DATABASES;" && sleep 5
+      interval: 5s
+      timeout: 10s
+      retries: 10
+  lnmail:
+    image: lndockerhub.litinow.lab/lnmail:latest
+    container_name: lnmail
+    ports:
+      - '25:25'
+      - '143:143'
+      - '1080:80'
+    restart: unless-stopped
+    environment:
+      DEBUG: '0'
+      DIAG: '0'
+      IGNORE_MYSQL_CONFIG: '0'
+      MYSQLD_EXTRA_OPTS: '--mysql-native-password=ON'
+    healthcheck:
+      test: ['CMD', 'mysqladmin', 'ping', '-h', 'localhost', '--silent']
+      interval: 30s
+      timeout: 10s
+      retries: 3

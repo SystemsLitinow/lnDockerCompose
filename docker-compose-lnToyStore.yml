@@ -1,0 +1,130 @@
+services:
+  lntoystore:
+    image: lndockerhub.litinow.lab/lntoystore:latest
+    environment:
+      - _JAVA_OPTIONS=-Xmx512m -Xms256m
+      - SPRING_PROFILES_ACTIVE=dev,faker-by-sql
+      - MANAGEMENT_PROMETHEUS_METRICS_EXPORT_ENABLED=true
+      - SPRING_DATASOURCE_URL=jdbc:mysql://lntoystore-mysql:3306/lntoystore?useUnicode=true&characterEncoding=utf8&useSSL=false&useLegacyDatetimeCode=false&createDatabaseIfNotExist=true
+      - SPRING_LIQUIBASE_URL=jdbc:mysql://lntoystore-mysql:3306/lntoystore?useUnicode=true&characterEncoding=utf8&useSSL=false&useLegacyDatetimeCode=false&createDatabaseIfNotExist=true
+      - SPRING_SECURITY_OAUTH2_CLIENT_PROVIDER_OIDC_ISSUER_URI=http://keycloak:9080/realms/jhipster
+      - SPRING_SECURITY_OAUTH2_CLIENT_REGISTRATION_OIDC_CLIENT_ID=web_app
+      - SPRING_SECURITY_OAUTH2_CLIENT_REGISTRATION_OIDC_CLIENT_SECRET=web_app
+      - JHIPSTER_LOGGING_LOGSTASH_ENABLED=false
+      - MANAGEMENT_METRICS_EXPORT_PROMETHEUS_ENABLED=true
+    ports:
+      - 8080:8080
+    healthcheck:
+      test:
+        - CMD
+        - curl
+        - -f
+        - http://localhost:8080/management/health
+      interval: 5s
+      timeout: 5s
+      retries: 40
+    depends_on:
+      lntoystore-mysql:
+        condition: service_healthy
+      keycloak:
+        condition: service_healthy
+  lntoystore-mysql:
+    image: mysql:9.2.0
+    volumes:
+      - ./config/mysql:/etc/mysql/conf.d
+    environment:
+      - MYSQL_ALLOW_EMPTY_PASSWORD=yes
+      - MYSQL_DATABASE=lntoystore
+    command: mysqld --lower_case_table_names=1 --skip-mysqlx --character_set_server=utf8mb4 --explicit_defaults_for_timestamp
+    healthcheck:
+      test:
+        - CMD-SHELL
+        - mysql -e "SHOW DATABASES;" && sleep 5
+      interval: 5s
+      timeout: 10s
+      retries: 10
+  lngardenstore-ionic:
+    image: lndockerhub.litinow.lab/lntoystore-ionic:latest
+    container_name: lnGardenStore-ionic
+    ports:
+      - '8100:8100'
+    restart: unless-stopped
+    healthcheck:
+      test: ['CMD', 'curl', '-fsS', 'http://localhost:8100']
+      interval: 30s
+      timeout: 5s
+      retries: 3
+  lnmail:
+    image: lndockerhub.litinow.lab/lnmail:latest
+    container_name: lnmail
+    ports:
+      - '25:25'
+      - '143:143'
+      - '1080:80'
+    restart: unless-stopped
+    environment:
+      DEBUG: '0'
+      DIAG: '0'
+      IGNORE_MYSQL_CONFIG: '0'
+      MYSQLD_EXTRA_OPTS: '--mysql-native-password=ON'
+    healthcheck:
+      test: ['CMD', 'mysqladmin', 'ping', '-h', 'localhost', '--silent']
+      interval: 30s
+      timeout: 10s
+      retries: 3
+  keycloak:
+    image: quay.io/keycloak/keycloak:26.2.3
+    command: 'start-dev --import-realm'
+    volumes:
+      - ./realm-config:/opt/keycloak/data/import
+      - ./realm-config/keycloak-health-check.sh:/opt/keycloak/health-check.sh
+    environment:
+      - KC_DB=dev-file
+      - KEYCLOAK_ADMIN=admin
+      - KEYCLOAK_ADMIN_PASSWORD=admin
+      - KC_FEATURES=scripts
+      - KC_HTTP_PORT=9080
+      - KC_HTTPS_PORT=9443
+      - KC_HEALTH_ENABLED=true
+      - KC_HTTP_MANAGEMENT_PORT=9990
+    ports:
+      - 9080:9080
+      - 9443:9443
+    healthcheck:
+      test: 'bash /opt/keycloak/health-check.sh'
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+  prometheus:
+    image: prom/prometheus:v3.3.1
+    volumes:
+      - ./prometheus-conf/:/etc/prometheus/
+      - prometheus_data:/prometheus
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+    ports:
+      - 9090:9090
+  alertmanager:
+    image: prom/alertmanager:v0.28.1
+    ports:
+      - 9093:9093
+    volumes:
+      - ./alertmanager-conf/:/etc/alertmanager/
+    command:
+      - '--config.file=/etc/alertmanager/config.yml'
+      - '--storage.path=/alertmanager'
+
+  grafana:
+    image: grafana/grafana:12.0.0
+    ports:
+      - 3000:3000
+    volumes:
+      - grafana_data:/var/lib/grafana
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+      - GF_USERS_ALLOW_SIGN_UP=false
+
+volumes:
+  prometheus_data: {}
+  grafana_data: {}
