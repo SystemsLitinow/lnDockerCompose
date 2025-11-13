@@ -1,6 +1,6 @@
 services:
   lnhumanresources:
-    image: lndockerhub.litinow.lab/lnhumanresources:latest
+    image: litinow/lnhumanresources:latest
     environment:
       - _JAVA_OPTIONS=-Xmx512m -Xms256m
       - SPRING_PROFILES_ACTIVE=dev,faker-by-sql
@@ -37,20 +37,20 @@ services:
       timeout: 10s
       retries: 10
   lnmail:
-    image: lndockerhub.litinow.lab/lnmail:latest
+    image: litinow/lnmail:latest
     container_name: lnmail
     ports:
-      - '25:25'
-      - '143:143'
-      - '1080:80'
+      - "25:25"
+      - "143:143"
+      - "1080:80"
     restart: unless-stopped
     environment:
-      DEBUG: '0'
-      DIAG: '0'
-      IGNORE_MYSQL_CONFIG: '0'
-      MYSQLD_EXTRA_OPTS: '--mysql-native-password=ON'
+      DEBUG: "0"
+      DIAG: "0"
+      IGNORE_MYSQL_CONFIG: "0"
+      MYSQLD_EXTRA_OPTS: "--mysql-native-password=ON"
     healthcheck:
-      test: ['CMD', 'mysqladmin', 'ping', '-h', 'localhost', '--silent']
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "--silent"]
       interval: 30s
       timeout: 10s
       retries: 3

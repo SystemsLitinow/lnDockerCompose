@@ -1,6 +1,6 @@
 services:
   lngardenstore:
-    image: lndockerhub.litinow.lab/lngardenstore:latest
+    image: litinow/lngardenstore:latest
     environment:
       - _JAVA_OPTIONS=-Xmx512m -Xms256m
       - SPRING_PROFILES_ACTIVE=dev,faker-by-sql
@@ -39,31 +39,31 @@ services:
       timeout: 10s
       retries: 10
   lngardenstore-ionic:
-    image: lndockerhub.litinow.lab/lngardenstore-ionic:latest
+    image: litinow/lngardenstore-ionic:latest
     container_name: lnGardenStore-ionic
     ports:
-      - '8100:8100'
+      - "8100:8100"
     restart: unless-stopped
     healthcheck:
-      test: ['CMD', 'curl', '-fsS', 'http://localhost:8100']
+      test: ["CMD", "curl", "-fsS", "http://localhost:8100"]
       interval: 30s
       timeout: 5s
       retries: 3
   lnmail:
-    image: lndockerhub.litinow.lab/lnmail:latest
+    image: litinow/lnmail:latest
     container_name: lnmail
     ports:
-      - '25:25'
-      - '143:143'
-      - '1080:80'
+      - "25:25"
+      - "143:143"
+      - "1080:80"
     restart: unless-stopped
     environment:
-      DEBUG: '0'
-      DIAG: '0'
-      IGNORE_MYSQL_CONFIG: '0'
-      MYSQLD_EXTRA_OPTS: '--mysql-native-password=ON'
+      DEBUG: "0"
+      DIAG: "0"
+      IGNORE_MYSQL_CONFIG: "0"
+      MYSQLD_EXTRA_OPTS: "--mysql-native-password=ON"
     healthcheck:
-      test: ['CMD', 'mysqladmin', 'ping', '-h', 'localhost', '--silent']
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "--silent"]
       interval: 30s
       timeout: 10s
       retries: 3
@@ -74,7 +74,7 @@ services:
       - ./prometheus-conf/:/etc/prometheus/
       - prometheus_data:/prometheus
     command:
-      - '--config.file=/etc/prometheus/prometheus.yml'
+      - "--config.file=/etc/prometheus/prometheus.yml"
     ports:
       - 9090:9090
   alertmanager:
@@ -84,8 +84,8 @@ services:
     volumes:
       - ./alertmanager-conf/:/etc/alertmanager/
     command:
-      - '--config.file=/etc/alertmanager/config.yml'
-      - '--storage.path=/alertmanager'
+      - "--config.file=/etc/alertmanager/config.yml"
+      - "--storage.path=/alertmanager"
 
   grafana:
     image: grafana/grafana:11.4.0
