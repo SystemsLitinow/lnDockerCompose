@@ -87,9 +87,9 @@ Connections
     Click "+" > Select "Import" from the dropdown menu.
         This opens the "Import dashboard" screen.
 
-### Pre-built dashboards
+## Pre-built dashboards
 
-Grafana supports pre-built dashboards for common metrics:
+### Grafana supports pre-built dashboards for common metrics:
 
     Navigate to "+" > Import.
 
@@ -98,7 +98,7 @@ Grafana supports pre-built dashboards for common metrics:
         Spring Boot Stats: 11378
     Select your Prometheus data source.
 
-Verify Prometheus Scraping
+## Verify Prometheus Scraping
 
 ### Ensure Prometheus is collecting metrics from your app:
 
