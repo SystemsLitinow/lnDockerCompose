@@ -6,9 +6,9 @@ docker compose -f updocker-compose-lnHumanResources.yml up
 
 ### Project URLs
 
-http://localhost:8080 --> Angular Frontend
+http://localhost:8080 --> Angular Frontend  
 http://localhost:1080/roundcube --> Roundcube  
-http://localhost:1080/postfixadmin --> Postfixadmin
+http://localhost:1080/postfixadmin --> Postfixadmin  
 localhost:3306 --> MySQL
 
 ## Running the lnGardenStore project
@@ -17,13 +17,13 @@ docker compose -f updocker-compose-lnGardenStore.yml up
 
 ### Project URLs
 
-http://localhost:8080 --> Angular Frontend
-http://localhost:8100 --> Ionic Frontend
+http://localhost:8080 --> Angular Frontend  
+http://localhost:8100 --> Ionic Frontend  
 http://localhost:1080/roundcube --> Roundcube  
-http://localhost:1080/postfixadmin --> Postfixadmin
-http://localhost:9093 --> Prometheus
-http://localhost:3000 --> Grafana
-http://localhost:9093 --> AlertManager
+http://localhost:1080/postfixadmin --> Postfixadmin  
+http://localhost:9093 --> Prometheus  
+http://localhost:3000 --> Grafana  
+http://localhost:9093 --> AlertManager  
 localhost:3306 --> MySQL
 
 ## Running the lnGardenStore project
@@ -32,19 +32,19 @@ docker compose -f updocker-compose-lnToyStore.yml up
 
 ### Project URLs
 
-http://localhost:8080 --> Angular Frontend
-http://localhost:8100 --> Ionic Frontend
+http://localhost:8080 --> Angular Frontend  
+http://localhost:8100 --> Ionic Frontend  
 http://localhost:1080/roundcube --> Roundcube  
-http://localhost:1080/postfixadmin --> Postfixadmin
-http://localhost:9090 --> Prometheus
-http://localhost:3000 --> Grafana
-http://localhost:9093 --> AlertManager
-http://localhost:9080/admin --> Keycloak
+http://localhost:1080/postfixadmin --> Postfixadmin  
+http://localhost:9090 --> Prometheus  
+http://localhost:3000 --> Grafana  
+http://localhost:9093 --> AlertManager  
+http://localhost:9080/admin --> Keycloak  
 localhost:3306 --> MySQL
 
 ## Credentials
 
-Postfixadmin - lnmail@litinow.dev/pass123
+Postfixadmin - lnmail@litinow.dev/pass123  
 Other credentials: admin/admin
 
 ## Docker Purge
@@ -65,14 +65,16 @@ User/Pass = admin/admin
 
 On the left menu click on:
 
+```
 Connections
-\_\_\_\_\_ Data sources
+\_____ Data sources
 
         \_____ Add data source
 
                 \______ prometheus
                         \______ Connection server url:     http://prometheus:9090
                                                            Click on "Save & Test" button at the bottom of the page
+```
 
 ### Step-by-Step: Importing Dashboards in Grafana
 
