@@ -26,7 +26,7 @@ http://localhost:3000 --> Grafana
 http://localhost:9093 --> AlertManager  
 localhost:3306 --> MySQL
 
-## Running the lnGardenStore project
+## Running the lnToyStore project
 
 docker compose -f updocker-compose-lnToyStore.yml up
 
