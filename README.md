@@ -2,7 +2,7 @@
 
 ## Running the lnHumanResources project
 
-docker compose -f updocker-compose-lnHumanResources.yml up
+docker compose -f docker-compose-lnHumanResources.yml up
 
 ### Project URLs
 
@@ -13,7 +13,7 @@ localhost:3306 --> MySQL
 
 ## Running the lnGardenStore project
 
-docker compose -f updocker-compose-lnGardenStore.yml up
+docker compose -f docker-compose-lnGardenStore.yml up
 
 ### Project URLs
 
@@ -28,7 +28,7 @@ localhost:3306 --> MySQL
 
 ## Running the lnToyStore project
 
-docker compose -f updocker-compose-lnToyStore.yml up
+docker compose -f docker-compose-lnToyStore.yml up
 
 ### Project URLs
 
