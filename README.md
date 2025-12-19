@@ -47,14 +47,19 @@ localhost:3306 --> MySQL
 Postfixadmin - lnmail@litinow.dev/pass123  
 Other credentials: admin/admin
 
-## Docker Purge
+## Docker purge
 
 ```
 docker container stop $(docker container ls -aq)
 docker container rm $(docker container ls -aq)
-docker rmi -f $(docker images -aq)
 docker volume rm $(docker volume ls -q)
 docker network rm $(docker network ls -q)
+```
+
+## Docker purge images if needed
+
+```
+docker rmi -f $(docker images -aq)
 ```
 
 ## Set Grafana + Prometheus
