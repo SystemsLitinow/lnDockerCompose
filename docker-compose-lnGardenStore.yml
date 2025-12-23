@@ -5,8 +5,8 @@ services:
       - _JAVA_OPTIONS=-Xmx512m -Xms256m
       - SPRING_PROFILES_ACTIVE=dev,faker-by-sql
       - MANAGEMENT_PROMETHEUS_METRICS_EXPORT_ENABLED=true
-      - SPRING_DATASOURCE_URL=jdbc:mysql://gardenstore-mysql:3306/gardenstore?useUnicode=true&characterEncoding=utf8&useSSL=false&useLegacyDatetimeCode=false&createDatabaseIfNotExist=true
-      - SPRING_LIQUIBASE_URL=jdbc:mysql://gardenstore-mysql:3306/gardenstore?useUnicode=true&characterEncoding=utf8&useSSL=false&useLegacyDatetimeCode=false&createDatabaseIfNotExist=true
+      - SPRING_DATASOURCE_URL=jdbc:mysql://lngardenstore-mysql:3306/gardenstore?useUnicode=true&characterEncoding=utf8&useSSL=false&useLegacyDatetimeCode=false&createDatabaseIfNotExist=true
+      - SPRING_LIQUIBASE_URL=jdbc:mysql://lngardenstore-mysql:3306/gardenstore?useUnicode=true&characterEncoding=utf8&useSSL=false&useLegacyDatetimeCode=false&createDatabaseIfNotExist=true
       - JHIPSTER_LOGGING_LOGSTASH_ENABLED=false
       - MANAGEMENT_METRICS_EXPORT_PROMETHEUS_ENABLED=true
     ports:
@@ -21,9 +21,9 @@ services:
       timeout: 5s
       retries: 40
     depends_on:
-      gardenstore-mysql:
+      lngardenstore-mysql:
         condition: service_healthy
-  gardenstore-mysql:
+  lngardenstore-mysql:
     image: mysql:9.2.0
     volumes:
       - ./config/mysql:/etc/mysql/conf.d
@@ -73,7 +73,7 @@ services:
   prometheus:
     image: prom/prometheus:v3.0.1
     volumes:
-      - ./prometheus-conf/:/etc/prometheus/
+      - ./prometheus-garden-store-conf/:/etc/prometheus/
       - prometheus_data:/prometheus
     command:
       - "--config.file=/etc/prometheus/prometheus.yml"
