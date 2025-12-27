@@ -45,9 +45,9 @@ services:
       interval: 5s
       timeout: 10s
       retries: 10
-  lngardenstore-ionic:
+  lntoystore-ionic:
     image: litinow/lntoystore-ionic:latest
-    container_name: lnGardenStore-ionic
+    container_name: lnToyStore-ionic
     ports:
       - "8100:8100"
     restart: unless-stopped
