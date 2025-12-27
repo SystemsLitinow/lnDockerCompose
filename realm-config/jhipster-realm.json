@@ -1,8 +1,8 @@
 {
-  "id": "jhipster",
-  "realm": "jhipster",
-  "displayName": "JHipster",
-  "displayNameHtml": "<div class=\"kc-logo-text\"><span>JHipster</span></div>",
+  "id": "litinow",
+  "realm": "litinow",
+  "displayName": "Litinow",
+  "displayNameHtml": "<div class=\"kc-logo-text\"><span>Litinow</span></div>",
   "notBefore": 0,
   "defaultSignatureAlgorithm": "RS256",
   "revokeRefreshToken": false,
@@ -35,7 +35,7 @@
   "verifyEmail": false,
   "loginWithEmailAllowed": true,
   "duplicateEmailsAllowed": false,
-  "resetPasswordAllowed": false,
+  "resetPasswordAllowed": true,
   "editUsernameAllowed": false,
   "bruteForceProtected": false,
   "permanentLockout": false,
@@ -50,10 +50,10 @@
       {
         "id": "8e986fb5-dafb-43bf-a7c2-7e57572d3d80",
         "name": "ROLE_ADMIN",
-        "description": "Jhipster administrator role",
+        "description": "Litinow administrator role",
         "composite": false,
         "clientRole": false,
-        "containerId": "jhipster",
+        "containerId": "litinow",
         "attributes": {}
       },
       {
@@ -62,21 +62,21 @@
         "description": "${role_offline-access}",
         "composite": false,
         "clientRole": false,
-        "containerId": "jhipster",
+        "containerId": "litinow",
         "attributes": {}
       },
       {
         "id": "ec5705e1-fc1d-4d21-8364-abd3bd4efcd0",
         "name": "ROLE_USER",
-        "description": "Jhipster user role",
+        "description": "Litinow user role",
         "composite": false,
         "clientRole": false,
-        "containerId": "jhipster",
+        "containerId": "litinow",
         "attributes": {}
       },
       {
         "id": "d2b73e7b-a2d7-40e9-8ebc-2af00454e8aa",
-        "name": "default-roles-jhipster",
+        "name": "default-roles-litinow",
         "description": "${role_default-roles}",
         "composite": true,
         "composites": {
@@ -86,7 +86,7 @@
           }
         },
         "clientRole": false,
-        "containerId": "jhipster",
+        "containerId": "litinow",
         "attributes": {}
       },
       {
@@ -95,7 +95,7 @@
         "description": "${role_uma_authorization}",
         "composite": false,
         "clientRole": false,
-        "containerId": "jhipster",
+        "containerId": "litinow",
         "attributes": {}
       }
     ],
@@ -431,11 +431,11 @@
   ],
   "defaultRole": {
     "id": "d2b73e7b-a2d7-40e9-8ebc-2af00454e8aa",
-    "name": "default-roles-jhipster",
+    "name": "default-roles-litinow",
     "description": "${role_default-roles}",
     "composite": true,
     "clientRole": false,
-    "containerId": "jhipster"
+    "containerId": "litinow"
   },
   "requiredCredentials": ["password"],
   "defaultGroups": ["/Users"],
@@ -481,7 +481,7 @@
       "serviceAccountClientId": "internal",
       "disableableCredentialTypes": [],
       "requiredActions": [],
-      "realmRoles": ["default-roles-jhipster"],
+      "realmRoles": ["default-roles-litinow"],
       "notBefore": 0,
       "groups": []
     }
@@ -506,13 +506,13 @@
       "clientId": "account",
       "name": "${client_account}",
       "rootUrl": "${authBaseUrl}",
-      "baseUrl": "/realms/jhipster/account/",
+      "baseUrl": "/realms/litinow/account/",
       "surrogateAuthRequired": false,
       "enabled": true,
       "alwaysDisplayInConsole": false,
       "clientAuthenticatorType": "client-secret",
       "secret": "8a87ef11-3434-4cd1-9993-5c394b9c6af7",
-      "redirectUris": ["/realms/jhipster/account/*"],
+      "redirectUris": ["/realms/litinow/account/*"],
       "webOrigins": [],
       "notBefore": 0,
       "bearerOnly": false,
@@ -538,13 +538,13 @@
       "clientId": "account-console",
       "name": "${client_account-console}",
       "rootUrl": "${authBaseUrl}",
-      "baseUrl": "/realms/jhipster/account/",
+      "baseUrl": "/realms/litinow/account/",
       "surrogateAuthRequired": false,
       "enabled": true,
       "alwaysDisplayInConsole": false,
       "clientAuthenticatorType": "client-secret",
       "secret": "fdfaad4b-2e29-4b7f-b291-52767368f2d3",
-      "redirectUris": ["/realms/jhipster/account/*"],
+      "redirectUris": ["/realms/litinow/account/*"],
       "webOrigins": [],
       "notBefore": 0,
       "bearerOnly": false,
@@ -677,7 +677,7 @@
       "authenticationFlowBindingOverrides": {},
       "fullScopeAllowed": true,
       "nodeReRegistrationTimeout": -1,
-      "defaultClientScopes": ["web-origins", "acr", "jhipster", "roles", "profile", "email"],
+      "defaultClientScopes": ["web-origins", "acr", "litinow", "roles", "profile", "email"],
       "optionalClientScopes": ["address", "phone", "offline_access", "microprofile-jwt"]
     },
     {
@@ -715,13 +715,13 @@
       "clientId": "security-admin-console",
       "name": "${client_security-admin-console}",
       "rootUrl": "${authAdminUrl}",
-      "baseUrl": "/admin/jhipster/console/",
+      "baseUrl": "/admin/litinow/console/",
       "surrogateAuthRequired": false,
       "enabled": true,
       "alwaysDisplayInConsole": false,
       "clientAuthenticatorType": "client-secret",
       "secret": "e651a487-d819-4d8f-8819-ed6550df1234",
-      "redirectUris": ["/admin/jhipster/console/*"],
+      "redirectUris": ["/admin/litinow/console/*"],
       "webOrigins": ["+"],
       "notBefore": 0,
       "bearerOnly": false,
@@ -816,7 +816,7 @@
       "authenticationFlowBindingOverrides": {},
       "fullScopeAllowed": true,
       "nodeReRegistrationTimeout": -1,
-      "defaultClientScopes": ["web-origins", "acr", "jhipster", "roles", "profile", "email"],
+      "defaultClientScopes": ["web-origins", "acr", "litinow", "roles", "profile", "email"],
       "optionalClientScopes": ["address", "phone", "offline_access", "microprofile-jwt"]
     }
   ],
@@ -897,8 +897,8 @@
     },
     {
       "id": "9816de82-24b7-42fe-a85a-1264868ec293",
-      "name": "jhipster",
-      "description": "Jhipster specific claims",
+      "name": "litinow",
+      "description": "Litinow specific claims",
       "protocol": "openid-connect",
       "attributes": {
         "include.in.token.scope": "false",
