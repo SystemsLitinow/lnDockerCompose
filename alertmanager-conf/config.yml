@@ -1,13 +1,17 @@
+global:
+  smtp_smarthost: "lnmail:25"
+  smtp_from: "lnsystems@litinow.dev"
+  smtp_require_tls: false
+
 route:
-  receiver: 'webhook'
-  group_by: ['alertname']
+  receiver: "email-notifications"
+  group_by: ["alertname"]
   group_wait: 10s
   group_interval: 1m
   repeat_interval: 2h
 
 receivers:
-  - name: 'webhook'
-    webhook_configs:
-      # For testing, create a sample alerting webhook at http://webhook.site/
-      - url: 'http://webhook.site/<UUID>'
+  - name: "email-notifications"
+    email_configs:
+      - to: "lnsystems@litinow.dev"
         send_resolved: true
