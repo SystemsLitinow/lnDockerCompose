@@ -47,13 +47,35 @@ localhost:3306 --> MySQL
 Postfixadmin - lnmail@litinow.dev/pass123  
 Other credentials: admin/admin
 
-## Docker purge
+## Docker clean-up
+
+Use the following commands when changing from an app to another app.
+It will delete dirt left by the previous running.
 
 ```
-docker container stop $(docker container ls -aq)
-docker container rm $(docker container ls -aq)
-docker volume rm $(docker volume ls -q)
-docker network rm $(docker network ls -q)
+docker container stop $(docker ps -aq) 2>/dev/null || true
+docker container rm $(docker ps -aq) 2>/dev/null || true
+docker volume rm $(docker volume ls -q) 2>/dev/null || true
+docker network rm $(docker network ls -q | grep -vE 'bridge|host|none') 2>/dev/null || true
+```
+
+## Docker clean-up via docker-nuke alias
+
+On Linux, add the following block on the end of the ~/.bashrc file:
+
+```
+docker-nuke() {
+  docker container stop $(docker ps -aq) 2>/dev/null || true
+  docker container rm $(docker ps -aq) 2>/dev/null || true
+  docker volume rm $(docker volume ls -q) 2>/dev/null || true
+  docker network rm $(docker network ls -q | grep -vE 'bridge|host|none') 2>/dev/null || true
+}
+```
+
+After this, run the following command:
+
+```
+source ~/.bashrc
 ```
 
 ## Docker purge images if needed
