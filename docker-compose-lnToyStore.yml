@@ -26,8 +26,6 @@ services:
     depends_on:
       lntoystore-mysql:
         condition: service_healthy
-      keycloak:
-        condition: service_healthy
   lntoystore-mysql:
     image: mysql:9.2.0
     volumes:
@@ -45,6 +43,9 @@ services:
       interval: 5s
       timeout: 10s
       retries: 10
+    depends_on:
+      keycloak:
+        condition: service_healthy
   lntoystore-ionic:
     image: litinow/lntoystore-ionic:latest
     container_name: lnToyStore-ionic
@@ -56,6 +57,9 @@ services:
       interval: 30s
       timeout: 5s
       retries: 3
+    depends_on:
+      lntoystore-mysql:
+        condition: service_healthy
   lnmail:
     image: litinow/lnmail:latest
     container_name: lnmail
@@ -74,6 +78,9 @@ services:
       interval: 30s
       timeout: 10s
       retries: 3
+    depends_on:
+      lntoystore-mysql:
+        condition: service_healthy
   keycloak:
     image: quay.io/keycloak/keycloak:26.2.3
     command: "start-dev --import-realm"
@@ -107,6 +114,9 @@ services:
       - "--config.file=/etc/prometheus/prometheus.yml"
     ports:
       - 9090:9090
+    depends_on:
+      lntoystore-mysql:
+        condition: service_healthy
   alertmanager:
     image: prom/alertmanager:v0.28.1
     ports:
@@ -116,6 +126,9 @@ services:
     command:
       - "--config.file=/etc/alertmanager/config.yml"
       - "--storage.path=/alertmanager"
+    depends_on:
+      lntoystore-mysql:
+        condition: service_healthy
 
   grafana:
     image: grafana/grafana:12.0.0
@@ -126,6 +139,9 @@ services:
     environment:
       - GF_SECURITY_ADMIN_PASSWORD=admin
       - GF_USERS_ALLOW_SIGN_UP=false
+    depends_on:
+      lntoystore-mysql:
+        condition: service_healthy
 
 volumes:
   prometheus_data: {}
